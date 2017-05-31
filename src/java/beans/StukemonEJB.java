@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.EntityManager;
 import entities.*;
+import java.util.List;
 
 /**
  *
@@ -37,7 +38,11 @@ public class StukemonEJB {
         em.close();
         return trainerEncontrado != null;
     }
-
+    
+    public List<Trainer> selectAllTrainers() {
+        return emf.createEntityManager().createNamedQuery("Trainer.findAll").getResultList();
+    }
+    
     public boolean insertPoke(Pokemon p) {
         if (!existsPoke(p)) {
             EntityManager em = emf.createEntityManager();

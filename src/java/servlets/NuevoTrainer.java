@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.*;
 import entities.*;
+import javax.ejb.EJB;
 import servlets.*;
 
 /**
@@ -22,6 +23,9 @@ import servlets.*;
  */
 @WebServlet(name = "NuevoTrainer", urlPatterns = {"/NuevoTrainer"})
 public class NuevoTrainer extends HttpServlet {
+    
+    @EJB
+    StukemonEJB ejb;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,7 +53,7 @@ public class NuevoTrainer extends HttpServlet {
             int pokeballs = Integer.parseInt(request.getParameter("pokeballs"));
             Integer potions = Integer.parseInt(request.getParameter("potions"));
             Trainer t = new Trainer(name, pokeballs, potions, 0);
-            if (miEjb.insertTrainer(t)) {
+            if (ejb.insertTrainer(t)) {
                 out.println("<h1>Nuevo entrenador creado!</h1>");
             } else {
                 out.println("<h1>El entrenador ya existe!</h1>");
